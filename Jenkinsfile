@@ -1,19 +1,11 @@
 pipeline {
 	agent any
-	tools {nodejs "Nodejs"} //Add tools to run npm test command directly
-	environment{
-		//Setup env variable accessible throughout the file
-        app ="./app"
-		php_app = "./php"
-    }
-
-	stages {
-		stage ('Checkout')
-		{
-			steps{
-				git branch:'master', url:'https://github.com/OWASP/Vulnerable-Web-Application.git'
-			}
-		}
+ stages {
+ stage ('Checkout') {
+ steps {
+ git branch:'master', url: 'https://github.com/OWASP/Vulnerable-WebApplication.git'
+ }
+ 
 		stage('Build'){
 			steps{
 				echo "Current workspace is ${env.WORKSPACE}"
@@ -41,4 +33,5 @@ pipeline {
 			recordIssues enabledForFailure: true, tool: sonarQube()
 		}
 	}
+}
 }
